@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>咸鱼派编译和刷入 U-Boot 教程 - SFPi</title>
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="..">SFPi</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="..">欢迎使用咸鱼派 SFPi</a>
+                            </li>
+                            <li class="active">
+                                <a href="./">咸鱼派编译和刷入 U-Boot 教程</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="..">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="disabled">
+                                <a rel="prev" >
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#u-boot">咸鱼派编译和刷入 U-Boot 教程</a></li>
+            <li><a href="#u-boot_1">从源代码编译 U-Boot</a></li>
+            <li><a href="#u-boot_4">编译 U-Boot</a></li>
+            <li><a href="#_3">启动</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="u-boot">咸鱼派编译和刷入 U-Boot 教程</h1>
+<h2 id="u-boot_1">从源代码编译 U-Boot</h2>
+<h3 id="u-boot_2">获取 U-Boot</h3>
+<p>在网上获取 U-Boot 的源代码。以 Github 为例，把 <a href="https://github.com/u-boot/u-boot">u-boot/u-boot</a> 仓库克隆下来：</p>
+<pre><code class="shell">$ git clone git@github.com:u-boot/u-boot.git
+</code></pre>
+
+<p>如果想要一个稳定版本的 U-Boot ，你可以 checkout 一个 tag，以 v2018.11-rc3 为例：</p>
+<pre><code class="shell">$ git checkout v2018.11-rc3
+</code></pre>
+
+<p>或者直接下载指定版本的 U-Boot 源码，以 v2018.11-rc3 为例：</p>
+<pre><code class="shell">$ wget https://github.com/u-boot/u-boot/archive/v2018.11-rc3.tar.gz
+$ tar xvf v2018.11-rc3.tar.gz
+</code></pre>
+
+<h3 id="_1">获取交叉编译工具链</h3>
+<p>您如果是 Archlinux 用户，可以直接安装 <a href="https://www.archlinux.org/packages/community/x86_64/arm-none-eabi-gcc/">arm-none-eabi-gcc</a> ：</p>
+<pre><code class="shell">$ sudo pacman -Sy arm-none-eabi-gcc
+</code></pre>
+
+<p>您如果是 Debian 用户，可以安装  <a href="https://packages.debian.org/buster/gcc-arm-linux-gnueabihf">gcc-arm-linux-gnueabihf</a> ：</p>
+<pre><code class="shell">$ sudo apt install gcc-arm-linux-gnueabihf
+</code></pre>
+
+<p>未列出的 Linux 发型版，可以搜索一下相关源有没有交叉编译工具链，如果没有，也可以使用 <a href="https://releases.linaro.org/components/toolchain/binaries/latest-7/arm-eabi/">Linaro GCC</a>。</p>
+<p>由于各发型版安装的交叉编译器前缀不同，如果安装的编译器是 arm-none-eabi-gcc ，那么我们之后用到的 CROSS_COMPILE 就是 arm-none-eabi- ，即去掉最后的 gcc 部分。其它常见的还有 arm-linux-gnueabihf- ，都可以。</p>
+<h3 id="u-boot_3">配置 U-Boot</h3>
+<h4 id="config">采用我们提供的 .config</h4>
+<p>已经测试过的 U-Boot 的 .config 文件已经存放在 <a href="https://github.com/sbc-fish/sfpi/tree/master/u-boot">sbc-fish/sfpi 的 u-boot</a> 目录下。这里的 .config 都是可以直接复制到 U-Boot 根目录中使用的。</p>
+<p>以 U-Boot v2018.11-rc3 为例，进入到 U-Boot 目录，下载 .config ：</p>
+<pre><code class="shell">$ wget https://raw.githubusercontent.com/sbc-fish/sfpi/master/u-boot/v2018.11-rc3/.config
+</code></pre>
+
+<p>如果我们没有提供相应版本的 .config ，可以找一个版本较近的 .config 下载下来用，如果有部分配置需要更改，在后续编译的时候会有相应的提示，一般用默认参数就可以了。</p>
+<p>如果想要自己调整配置：</p>
+<pre><code class="shell">$ make ARCH=arm CROSS_COMPILE=arm-none-eabi- menuconfig
+</code></pre>
+
+<p>其中 CROSS_COMPILE 是您所安装的交叉编译工具链的前缀。如果您使用我们提供的 .config ，应该不需要做更改。</p>
+<h2 id="u-boot_4">编译 U-Boot</h2>
+<p>然后开始编译：</p>
+<pre><code class="shell">$ make ARCH=arm CROSS_COMPILE=arm-none-eabi- -j24
+</code></pre>
+
+<p>其中 <code>-j24</code> 根据您的机器的 CPU 进行调整。此时应该得到一个 <code>u-boot-sunxi-with-spl.bin</code> 的文件。</p>
+<h3 id="u-boot_5">刷入 U-Boot</h3>
+<h4 id="_2">分区</h4>
+<p>建议把 TF 卡分区采用 MBR 格式，并在第一个分区前预留一定的空间。如果我们在上一步编译的文件大小为几百 K ，一个可供参考的分区方案是：</p>
+<pre><code>Disk: /dev/disk4        geometry: 980/128/63 [7907328 sectors]
+Offset: 0       Signature: 0xAA55
+         Starting       Ending
+ #: id  cyl  hd sec -  cyl  hd sec [     start -       size]
+------------------------------------------------------------------------
+ 1: 0B 1023 254  63 - 1023 254  63 [      2048 -      20480] Win95 FAT-32
+ 2: 83 1023 254  63 - 1023 254  63 [     22528 -    7884800] Linux files*
+ 3: 00    0   0   0 -    0   0   0 [         0 -          0] unused
+ 4: 00    0   0   0 -    0   0   0 [         0 -          0] unused
+</code></pre>
+
+<p>第一个分区（FAT-32）从第 2048 个扇区开始，即在 1M （2048*512=1M） 的地方开始，这样给 U-Boot 预留出足够的空间。根据编译出来的 <code>u-boot-sunxi-with-spl.bin</code> 文件和 TF 卡容量可以自行调整。</p>
+<h4 id="dd-u-boot">使用 DD 刷入 U-Boot</h4>
+<p>把 <code>u-boot-sunxi-with-spl.bin</code> 写入到 TF 卡的 8192 偏移处即可，命令如下：</p>
+<pre><code>$ sudo dd if=u-boot-sunxi-with-spl.bin of=/dev/disk4 bs=1024 seek=8
+</code></pre>
+
+<p>如果您是 macOS 用户，可以使用我们编写的 <a href="https://raw.githubusercontent.com/sbc-fish/sfpi/master/scripts/flash_uboot_macOS.sh">flash_uboot_macOS.sh</a> 。</p>
+<h2 id="_3">启动</h2>
+<h3 id="_4">连接串口</h3>
+<p>把 TF 卡插入到咸鱼派中，连接 microUSB 到电脑中，应该会看到一个 USB to Serial 设备。各平台的驱动可以在<a href="http://www.wch.cn/downloads/CH341SER_ZIP.html">沁恒官网下载</a>得到。在 Windows 下，可以采用串口助手等工具，在 Linux 和 macOS 下，可以用如下命令：</p>
+<pre><code>$ screen [tty] 115200
+</code></pre>
+
+<p>查看串口。对于 macOS ，此处的 tty 应为 /dev/tty.wchusbserial* 的格式。</p>
+<p>按下板上的上电按钮，如果配置成功，应该可以成功看到 U-Boot 的启动。至此，我们就可以进行下一步的 Linux 内核编译过程了。</p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
