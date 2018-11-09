@@ -4,7 +4,7 @@
 
 ### 获取 U-Boot
 
-在网上获取 U-Boot 的源代码。以 Github 为例，把 [u-boot/u-boot] 仓库克隆下来：
+在网上获取 U-Boot 的源代码。以 Github 为例，把 [u-boot/u-boot](https://github.com/u-boot/u-boot) 仓库克隆下来：
 
 ```shell
 $ git clone git@github.com:u-boot/u-boot.git
@@ -32,10 +32,10 @@ $ tar xvf v2018.11-rc3.tar.gz
 $ sudo pacman -Sy arm-none-eabi-gcc
 ```
 
-您如果是 Debian 用户，可以安装  [gcc-arm-linux-gnueabi](https://packages.debian.org/buster/gcc-arm-linux-gnueabi) ：
+您如果是 Debian 用户，可以安装  [gcc-arm-linux-gnueabihf](https://packages.debian.org/buster/gcc-arm-linux-gnueabihf) ：
 
 ```shell
-$ sudo apt install gcc-arm-linux-gnueabi
+$ sudo apt install gcc-arm-linux-gnueabihf
 ```
 
 未列出的 Linux 发型版，可以搜索一下相关源有没有交叉编译工具链，如果没有，也可以使用 [Linaro GCC](https://releases.linaro.org/components/toolchain/binaries/latest-7/arm-eabi/)。
@@ -54,6 +54,8 @@ $ sudo apt install gcc-arm-linux-gnueabi
 $ wget https://raw.githubusercontent.com/sbc-fish/sfpi/master/u-boot/v2018.11-rc3/.config
 ```
 
+如果我们没有提供相应版本的 .config ，可以找一个版本较近的 .config 下载下来用，如果有部分配置需要更改，在后续编译的时候会有相应的提示，一般用默认参数就可以了。
+
 如果想要自己调整配置：
 
 ```shell
@@ -67,7 +69,7 @@ $ make ARCH=arm CROSS_COMPILE=arm-none-eabi- menuconfig
 然后开始编译：
 
 ```shell
-$ make ARCH=arm CROSS_COMPILE=arm-none=eabi -j24
+$ make ARCH=arm CROSS_COMPILE=arm-none-eabi- -j24
 ```
 
 其中 `-j24` 根据您的机器的 CPU 进行调整。此时应该得到一个 `u-boot-sunxi-with-spl.bin` 的文件。
