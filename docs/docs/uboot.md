@@ -38,15 +38,27 @@ $ sudo pacman -Sy arm-none-eabi-gcc
 $ sudo apt install gcc-arm-linux-gnueabihf
 ```
 
-未列出的 Linux 发型版，可以搜索一下相关源有没有交叉编译工具链，如果没有，也可以使用 [Linaro GCC](https://releases.linaro.org/components/toolchain/binaries/latest-7/arm-eabi/)。
+您如果是 Ubuntu 用户，可以安装 [gcc-arm-linux-gnueabihf](https://packages.ubuntu.com/bionic/gcc-arm-linux-gnueabihf)
 
-由于各发型版安装的交叉编译器前缀不同，如果安装的编译器是 arm-none-eabi-gcc ，那么我们之后用到的 CROSS_COMPILE 就是 arm-none-eabi- ，即去掉最后的 gcc 部分。其它常见的还有 arm-linux-gnueabihf- ，都可以。
+```shell
+$ sudo apt-get install gcc-arm-linux-gnueabihf
+```
+
+您如果是 Fedora 用户，可以安装 [arm-none-eabi-gcc-cs](https://rpmfind.net/linux/rpm2html/search.php?query=arm-none-eabi-gcc)
+
+```shell
+$ sudo dnf install arm-none-eabi-gcc-cs
+```
+
+对于未列出的 Linux 发型版，您可以搜索一下它的源有没有交叉编译工具链，如果没有，也可以使用 [Linaro GCC](https://releases.linaro.org/components/toolchain/binaries/latest-7/arm-eabi/)。
+
+由于各发型版安装的交叉编译器前缀不同，如果安装的编译器是 arm-none-eabi-gcc ，那么我们之后用到的 CROSS_COMPILE 就是 arm-none-eabi- ，即去掉最后的 gcc 部分。其它常见的还有 arm-linux-gnueabihf- 和 arm-linux-gnueabi ，都可以。
 
 ### 配置 U-Boot
 
 #### 采用我们提供的 .config
 
-已经测试过的 U-Boot 的 .config 文件已经存放在 [sbc-fish/sfpi 的 u-boot](https://github.com/sbc-fish/sfpi/tree/master/u-boot) 目录下。这里的 .config 都是可以直接复制到 U-Boot 根目录中使用的。
+我们提供的已经测试过的 U-Boot 的 .config 文件已经存放在 [sbc-fish/sfpi 的 u-boot](https://github.com/sbc-fish/sfpi/tree/master/u-boot) 目录下。这里的 .config 都是可以直接复制到 U-Boot 根目录中使用的。
 
 以 U-Boot v2018.11-rc3 为例，进入到 U-Boot 目录，下载 .config ：
 
@@ -72,14 +84,14 @@ $ make ARCH=arm CROSS_COMPILE=arm-none-eabi- menuconfig
 $ make ARCH=arm CROSS_COMPILE=arm-none-eabi- -j24
 ```
 
-其中 `-j24` 根据您的机器的 CPU 进行调整。此时应该得到一个 `u-boot-sunxi-with-spl.bin` 的文件。
+其中 `-j24` 根据您的机器的 CPU 进行调整。此时应该得到一个 `u-boot-sunxi-with-spl.bin` 的文件，在当前目录下。
 
 
 ### 刷入 U-Boot
 
 #### 分区
 
-建议把 TF 卡分区采用 MBR 格式，并在第一个分区前预留一定的空间。如果我们在上一步编译的文件大小为几百 K ，一个可供参考的分区方案是：
+建议向 TF 卡写入 MBR 格式的分区表，并在第一个分区前预留一定的空间。如果我们在上一步编译的文件大小为几百 K ，一个可供参考的分区方案是：
 
 ```
 Disk: /dev/disk4        geometry: 980/128/63 [7907328 sectors]
@@ -93,7 +105,7 @@ Offset: 0       Signature: 0xAA55
  4: 00    0   0   0 -    0   0   0 [         0 -          0] unused
 ```
 
-第一个分区（FAT-32）从第 2048 个扇区开始，即在 1M （2048*512=1M） 的地方开始，这样给 U-Boot 预留出足够的空间。根据编译出来的 `u-boot-sunxi-with-spl.bin` 文件和 TF 卡容量可以自行调整。
+第一个分区（FAT-32）从第 2048 个扇区开始，即在 1M （2048*512=1M） 的地方开始，这样给 U-Boot 预留出足够的空间。这个预留的空间大小，根据编译出来的 `u-boot-sunxi-with-spl.bin` 文件和 TF 卡容量自行调整。对于分区工具的使用，可以参考 [Partitioning - Archlinux Wiki](https://wiki.archlinux.org/index.php/Partitioning#Master_Boot_Record) 、 [fdisk - Archlinux Wiki](https://wiki.archlinux.org/index.php/Fdisk) 或 [fdisk Manpages](https://ss64.com/osx/fdisk.html) 。
 
 #### 使用 DD 刷入 U-Boot
 
@@ -117,4 +129,29 @@ $ screen [tty] 115200
 
 查看串口。对于 macOS ，此处的 tty 应为 /dev/tty.wchusbserial* 的格式。
 
-按下板上的上电按钮，如果配置成功，应该可以成功看到 U-Boot 的启动。至此，我们就可以进行下一步的 Linux 内核编译过程了。
+按下板上的上电按钮，如果配置成功，应该可以成功看到 U-Boot 的启动如下：
+
+```
+U-Boot SPL 2018.11-rc3 (Nov 09 2018 - 11:55:32 +0800)
+DRAM: 64 MiB
+Trying to boot from MMC1
+
+
+U-Boot 2018.11-rc3 (Nov 09 2018 - 11:55:32 +0800) Allwinner Technology
+
+CPU:   Allwinner V3s (SUN8I 1681)
+Model: Lichee Pi Zero
+DRAM:  64 MiB
+MMC:   SUNXI SD/MMC: 0
+Loading Environment from FAT... OK
+In:    serial@01c28000
+Out:   serial@01c28000
+Err:   serial@01c28000
+Net:   No ethernet found.
+starting USB...
+No controllers found
+Hit any key to stop autoboot:  0
+=>
+```
+
+至此，我们就可以进行下一步的 Linux 内核编译过程了。
