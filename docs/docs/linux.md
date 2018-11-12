@@ -1,4 +1,4 @@
-# Linux 内核的编译
+# Linux 内核编译
 
 ## 下载 Linux 源码和应用 Patch
 
