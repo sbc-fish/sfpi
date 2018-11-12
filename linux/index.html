@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>Linux 内核的编译 - SFPi</title>
+        <title>Linux 内核编译 - SFPi</title>
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -47,16 +47,16 @@
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
                             <li >
-                                <a href="..">欢迎使用咸鱼派 SFPi</a>
-                            </li>
-                            <li class="active">
-                                <a href="./">Linux 内核的编译</a>
+                                <a href="../docs/index.md">欢迎使用咸鱼派 SFPi</a>
                             </li>
                             <li >
-                                <a href="../peripherals/">外设配置</a>
+                                <a href="../docs/uboot.md">U-Boot</a>
                             </li>
                             <li >
-                                <a href="../uboot/">编译和刷入 U-Boot</a>
+                                <a href="../docs/linux.md">Linux</a>
+                            </li>
+                            <li >
+                                <a href="../docs/peripherals.md">外设</a>
                             </li>
                         </ul>
 
@@ -66,15 +66,8 @@
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
-                            <li >
-                                <a rel="next" href="..">
-                                    <i class="fa fa-arrow-left"></i> Previous
-                                </a>
-                            </li>
-                            <li >
-                                <a rel="prev" href="../peripherals/">
-                                    Next <i class="fa fa-arrow-right"></i>
-                                </a>
+                            <li>
+                                <a href="https://github.com/sbc-fish/sfpi/edit/master/docs/linux.md"><i class="fa fa-github"></i> Edit on GitHub</a>
                             </li>
                     </ul>
                 </div>
@@ -84,7 +77,7 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#linux">Linux 内核的编译</a></li>
+        <li class="main active"><a href="#linux">Linux 内核编译</a></li>
             <li><a href="#linux-patch">下载 Linux 源码和应用 Patch</a></li>
             <li><a href="#_1">获取交叉编译工具链</a></li>
             <li><a href="#linux-config">生成并更改 Linux .config</a></li>
@@ -96,7 +89,7 @@
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="linux">Linux 内核的编译</h1>
+<h1 id="linux">Linux 内核编译</h1>
 <h2 id="linux-patch">下载 Linux 源码和应用 Patch</h2>
 <p>我们在 <a href="https://github.com/sbc-fish/sfpi/tree/master/u-boot">sbc-fish/sfpi:/linux</a> 维护了对 Linux 主线内核的 Patch 。它提供了咸鱼派设备的 DTS、默认的 <code>.config</code> 和其它一些小的更改。目前已经支持的内核版本见以上链接，其它内核版本可根据最接近的内核版本的 Patch 进行更改。</p>
 <p>下载 Linux 内核源码，以 4.19.1 为例：</p>
