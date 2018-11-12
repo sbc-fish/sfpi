@@ -1,4 +1,4 @@
-# 咸鱼派编译和刷入 U-Boot 教程
+# 编译和刷入 U-Boot
 
 ## 从源代码编译 U-Boot
 
@@ -154,4 +154,4 @@ Hit any key to stop autoboot:  0
 =>
 ```
 
-至此，我们就可以进行下一步的 Linux 内核编译过程了。
+至此，我们就可以进行下一步的 Linux 内核编译过程了。见 [Linux 内核的编译](https://sbc-fish.github.io/sfpi/linux/)。
