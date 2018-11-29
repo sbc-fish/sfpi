@@ -1,7 +1,0 @@
-site_name: SFPi
-repo_url: https://github.com/sbc-fish/sfpi
-nav:
-    - '欢迎使用咸鱼派 SFPi': index.md
-    - 'U-Boot': uboot.md
-    - 'Linux': linux.md
-    - '外设': peripherals.md
