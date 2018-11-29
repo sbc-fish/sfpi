@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="img/favicon.ico">
-        <title>SFPi</title>
+        <title>SFPi 咸鱼派</title>
         <link href="css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/base.css" rel="stylesheet">
@@ -39,7 +39,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href=".">SFPi</a>
+                    <a class="navbar-brand" href=".">SFPi 咸鱼派</a>
                 </div>
 
                 <!-- Expanded navigation -->
@@ -47,16 +47,29 @@
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
                             <li class="active">
-                                <a href=".">欢迎使用咸鱼派 SFPi</a>
+                                <a href=".">入门</a>
                             </li>
-                            <li >
-                                <a href="uboot/">U-Boot</a>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">构建 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="build/uboot/">U-Boot</a>
+</li>
+                                    
+<li >
+    <a href="build/linux/">Linux</a>
+</li>
+                                </ul>
                             </li>
-                            <li >
-                                <a href="linux/">Linux</a>
-                            </li>
-                            <li >
-                                <a href="peripherals/">外设</a>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">应用 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="peripherals/">外设</a>
+</li>
+                                </ul>
                             </li>
                         </ul>
 
@@ -72,7 +85,7 @@
                                 </a>
                             </li>
                             <li >
-                                <a rel="prev" href="uboot/">
+                                <a rel="prev" href="build/uboot/">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -90,26 +103,37 @@
         <li class="main active"><a href="#sfpi">欢迎使用咸鱼派 SFPi</a></li>
             <li><a href="#_1">概述</a></li>
             <li><a href="#_2">特性</a></li>
+            <li><a href="#_3">快速开始</a></li>
+            <li><a href="#_4">资料下载</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
 <h1 id="sfpi">欢迎使用咸鱼派 SFPi</h1>
 <h2 id="_1">概述</h2>
+<p>咸鱼派是一款基于 Allwinner V3s 处理器的单板计算机（SBC），形状与树莓派一致，
+提供了丰富的接口和外设，非常适合中低性能产品开发。</p>
 <h2 id="_2">特性</h2>
 <ul>
 <li>Cortex-A7 1.2GHz（ARM v7-A）处理器</li>
 <li>64 MiB DRAM</li>
 <li>100 Mbps 以太网</li>
-<li>PoE、12V DC、USB 三种供电方式</li>
+<li><strong>PoE</strong>、12V DC、Micro USB 三种供电方式</li>
+<li><strong>内置硬件看门狗模块</strong></li>
 <li>SD/MMC 卡，预留 SPI Flash 焊盘（SOIC-8 封装）</li>
-<li>内置 USB TTL 模块</li>
-<li>双路 USB 接口</li>
-<li>集成音频输出、麦克风输入</li>
+<li>内置 USB TTL (CH330) 模块</li>
+<li>双路 USB 2.0 接口</li>
+<li>3.5mm 音频输出、麦克风输入</li>
 <li>支持 Wi-Fi（802.11 bgn）和 Bluetooth 4.0</li>
 <li>IO（GPIO/SPI/I2C/UART）与树莓派几乎兼容，适配常见树莓派扩展板</li>
 <li>适配常见树莓派外壳</li>
 <li>Linux 主线支持</li>
+</ul>
+<h2 id="_3">快速开始</h2>
+<h2 id="_4">资料下载</h2>
+<ul>
+<li>原理图</li>
+<li>V3s 数据手册</li>
 </ul></div>
         </div>
 
@@ -193,5 +217,5 @@
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2018-11-12 07:44:59
+Build Date UTC : 2018-11-29 15:20:42
 -->

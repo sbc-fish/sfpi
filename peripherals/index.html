@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>外设 - SFPi</title>
+        <title>外设 - SFPi 咸鱼派</title>
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -39,7 +39,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="..">SFPi</a>
+                    <a class="navbar-brand" href="..">SFPi 咸鱼派</a>
                 </div>
 
                 <!-- Expanded navigation -->
@@ -47,16 +47,29 @@
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
                             <li >
-                                <a href="..">欢迎使用咸鱼派 SFPi</a>
+                                <a href="..">入门</a>
                             </li>
-                            <li >
-                                <a href="../uboot/">U-Boot</a>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">构建 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../build/uboot/">U-Boot</a>
+</li>
+                                    
+<li >
+    <a href="../build/linux/">Linux</a>
+</li>
+                                </ul>
                             </li>
-                            <li >
-                                <a href="../linux/">Linux</a>
-                            </li>
-                            <li class="active">
-                                <a href="./">外设</a>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">应用 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li class="active">
+    <a href="./">外设</a>
+</li>
+                                </ul>
                             </li>
                         </ul>
 
@@ -67,7 +80,7 @@
                             </a>
                         </li>
                             <li >
-                                <a rel="next" href="../linux/">
+                                <a rel="next" href="../build/linux/">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
