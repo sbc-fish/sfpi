@@ -19,9 +19,11 @@
 - 适配常见树莓派外壳
 - Linux 主线支持
 
+![Pinout](img/pinout.png)
+
 ## 快速开始
 
 ## 资料下载
-- 原理图
+- [原理图](https://github.com/sbc-fish/sfpi/raw/master/hardware/Schematic.pdf)
 - V3s 数据手册
 
