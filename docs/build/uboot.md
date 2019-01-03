@@ -116,9 +116,10 @@ Offset: 0       Signature: 0xAA55
 把 `u-boot-sunxi-with-spl.bin` 写入到 TF 卡的 8192 偏移处即可，命令如下：
 
 ```
-$ sudo dd if=u-boot-sunxi-with-spl.bin of=/dev/disk4 bs=1024 seek=8
+$ sudo dd if=u-boot-sunxi-with-spl.bin of=/dev/disk99 bs=1024 seek=8
 ```
 
+请替换命令中的 `disk99` 为实际的 TF 卡设备名，如 `sdc`, `disk3` 等。
 如果您是 macOS 用户，可以使用我们编写的 [flash_uboot_macOS.sh](https://raw.githubusercontent.com/sbc-fish/sfpi/master/scripts/flash_uboot_macOS.sh) 。
 
 ## 启动
