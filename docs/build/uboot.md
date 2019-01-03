@@ -2,6 +2,10 @@
 
 ## 从源代码编译 U-Boot
 
+### 安装基础编译工具
+
+编译过程需要用到 GCC, bison, flex, swig 等工具，请保证系统上已经安装。
+
 ### 获取 U-Boot
 
 在网上获取 U-Boot 的源代码。以 Github 为例，把 [u-boot/u-boot](https://github.com/u-boot/u-boot) 仓库克隆下来：
@@ -63,7 +67,7 @@ $ sudo dnf install arm-none-eabi-gcc-cs
 以 U-Boot v2018.11-rc3 为例，进入到 U-Boot 目录，下载 .config ：
 
 ```shell
-$ wget https://raw.githubusercontent.com/sbc-fish/sfpi/master/u-boot/v2018.11-rc3/.config
+$ wget -O .config https://raw.githubusercontent.com/sbc-fish/sfpi/master/u-boot/v2018.11-rc3/.config
 ```
 
 如果我们没有提供相应版本的 .config ，可以找一个版本较近的 .config 下载下来用，如果有部分配置需要更改，在后续编译的时候会有相应的提示，一般用默认参数就可以了。
