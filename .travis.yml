@@ -1,20 +1,34 @@
 language: c
 before_install:
-  - sudo apt-get install -yy gcc-arm-linux-gnueabihf
+- sudo apt-get install -yy gcc-arm-linux-gnueabihf
 script:
-  - wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.19.1.tar.xz
-  - tar -xf linux-4.19.1.tar.xz
-  - pushd linux-*
-  - patch -p1 <../linux/4.19.1/sfpi-linux-4.19.1.patch
-  - make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- saltedfishpi_defconfig
-  - make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j4
-  - popd
-  - wget 'https://github.com/u-boot/u-boot/archive/v2018.11.tar.gz'
-  - tar -xf v2018.11.tar.gz
-  - pushd u-boot-*
-  - cp ../u-boot/v2018.11-rc3/.config .
-  - make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j4
-  - popd
+- wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.19.1.tar.xz
+- tar -xf linux-4.19.1.tar.xz
+- pushd linux-*
+- patch -p1 <../linux/4.19.1/sfpi-linux-4.19.1.patch
+- make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- saltedfishpi_defconfig
+- make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j4
+- popd
+- wget 'https://github.com/u-boot/u-boot/archive/v2018.11.tar.gz'
+- tar -xf v2018.11.tar.gz
+- pushd u-boot-*
+- cp ../u-boot/v2018.11-rc3/.config .
+- make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j4
+- popd
+dist: xenial
 addons:
   apt:
     update: true
+deploy:
+  provider: releases
+  skip_cleanup: true
+  file_glob: true
+  api_key:
+    secure: BgNV8WIor1EA6Qljbo02AcUNtHvZQkTEzIulNo21FHFGQY31ON+tjraFrnfokeLKqBAqVhBEcSoiPr/7BuMv7pMXHeJIAnliCrpJlyf7BABbzTa2u+j/lyovSjctbv2ecNKoeGscMQ6ZlgvxOqrbHwjHe189duImI7uYDSpRtNwi+tcK+Cz03kquyVm/t/w0oHNCd5pbaGky/PJOX4TMuy92k/JAFgH1mJcDA+96lem0013Fhn7Uv0CIfh1a8b+BL3vq+WOYBLRu/nNJbjH4XNu+vyaL2SmBaEdPpkjepBUSpuem+jvowKNQsRyNItgy/13fJqQwvr9iTAL5HA/rl12/ramUyynpl+fYQijJEtx1YR8cCaEJCmd6DX4zAh84gN7ueBex8rQLhS78WYlMWsdVtbjfMTW2aIWlnyCZ/FW2RpHNj6QY/dCn/gTYihnQscmSh2bXK8GC8rfb0axHNN0pvsJD+l/Jvxs3DRT7UFKpVdNDg0BwmcmW1R/udPwZw1ix9X1kjVN396meQWIvXOzu0liQD1mOq8NZTZSoysrYIfHyTCciGN4gxspw5DRYmKt6AhoWqeoWEq4NCx5/2Y6m9/QY7OyBrO74mkWqA3th3SuNkxUU0AVpv7jA9IfxGCv+Sm7M2paVTUKP4b1iWU+hz251ByewRFbb+rOwk8I=
+  file:
+  - linux-*/arch/arm/boot/zImage
+  - linux-*/arch/arm/boot/dts/sun8i-v3s-saltedfishpi.dtb
+  - u-boot-*/u-boot-sunxi-with-spl.bin
+  on:
+    repo: sbc-fish/sfpi
+    tags: true
