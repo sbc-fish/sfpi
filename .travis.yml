@@ -1,6 +1,5 @@
 language: c
 before_install:
-- sudo apt install -y swig
 - wget https://toolchains.bootlin.com/downloads/releases/toolchains/armv7-eabihf/tarballs/armv7-eabihf--glibc--stable-2018.11-1.tar.bz2 
 - tar -xf armv7-*
 script:
@@ -22,6 +21,24 @@ dist: xenial
 addons:
   apt:
     update: true
+  packages:
+  - cppcheck
+  - sloccount
+  - sparse
+  - bc
+  - build-essential
+  - libsdl1.2-dev
+  - python
+  - python-virtualenv
+  - swig
+  - libpython-dev
+  - iasl
+  - rpm2cpio
+  - wget
+  - device-tree-compiler
+  - lzop
+  - liblz4-tool
+  - libisl15
 deploy:
   provider: releases
   skip_cleanup: true
