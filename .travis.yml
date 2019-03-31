@@ -12,7 +12,7 @@ script:
   - wget 'https://github.com/u-boot/u-boot/archive/v2018.11.tar.gz'
   - tar -xf v2018.11.tar.gz
   - pushd u-boot-*
-  - cp u-boot/v2018.11-rc3/.config .
+  - cp ../u-boot/v2018.11-rc3/.config .
   - make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j4
   - popd
 addons:
