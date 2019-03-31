@@ -4,6 +4,8 @@ before_install:
 - tar -xf armv7-*
 script:
 - export PATH=$PATH:$PWD/armv7-eabihf--glibc--stable-2018.11-1/bin
+- virtualenv /tmp/venv
+- . /tmp/venv/bin/activate
 - wget 'https://github.com/u-boot/u-boot/archive/v2018.11.tar.gz'
 - tar -xf v2018.11.tar.gz
 - pushd u-boot-*
@@ -31,6 +33,7 @@ addons:
     - rpm2cpio
     - wget
     - device-tree-compiler
+    - liblz4-tool
 deploy:
   provider: releases
   skip_cleanup: true
