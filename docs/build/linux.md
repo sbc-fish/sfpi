@@ -2,26 +2,24 @@
 
 ## 下载 Linux 源码和应用 Patch
 
-我们在 [sbc-fish/sfpi:/linux](https://github.com/sbc-fish/sfpi/tree/master/u-boot) 维护了对 Linux 主线内核的 Patch 。它提供了咸鱼派设备的 DTS、默认的 `.config` 和其它一些小的更改。目前已经支持的内核版本见以上链接，其它内核版本可根据最接近的内核版本的 Patch 进行更改。
+我们在 [sbc-fish/sfpi:/linux](https://github.com/sbc-fish/sfpi/tree/master/linux) 维护了对 Linux 主线内核的 Patch 。它提供了咸鱼派设备的 DTS、默认的 `.config` 和其它一些小的更改。目前已经支持的内核版本见以上链接，其它内核版本可根据最接近的内核版本的 Patch 进行更改。
 
-下载 Linux 内核源码，以 4.19.1 为例：
+下载 Linux 内核源码，以 4.19.32 为例：
 
 ```shell
-$ wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.19.1.tar.xz
-$ tar xvf linux-4.19.1.tar.xz
-$ cd linux-4.19.1
+$ wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.19.32.tar.xz
+$ tar xvf linux-4.19.32.tar.xz
+$ cd linux-4.19.32
 ```
 
 应用我们提供的 Patch ：
 
 ```shell
-$ curl https://raw.githubusercontent.com/sbc-fish/sfpi/master/linux/4.19.1/sfpi-linux-4.19.1.patch | patch -p1
+$ curl https://raw.githubusercontent.com/sbc-fish/sfpi/master/linux/4.19.32/sfpi-linux-4.19.32.patch | patch -p1
 patching file arch/arm/boot/dts/Makefile
 patching file arch/arm/boot/dts/sun8i-v3s-saltedfishpi.dts
 patching file arch/arm/boot/dts/sun8i-v3s.dtsi
 patching file arch/arm/configs/saltedfishpi_defconfig
-patching file drivers/bluetooth/Kconfig
-patching file drivers/bluetooth/hci_h5.c
 ```
 
 ## 获取交叉编译工具链
