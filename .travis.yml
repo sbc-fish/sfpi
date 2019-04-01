@@ -12,10 +12,10 @@ script:
 - cp ../u-boot/v2018.11-rc3/.config .
 - make ARCH=arm CROSS_COMPILE=arm-linux- -j4
 - popd
-- wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.19.1.tar.xz
-- tar -xf linux-4.19.1.tar.xz
+- wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.19.32.tar.xz
+- tar -xf linux-4.19.32.tar.xz
 - pushd linux-*
-- patch -p1 <../linux/4.19.1/sfpi-linux-4.19.1.patch
+- patch -p1 <../linux/4.19.32/sfpi-linux-4.19.32.patch
 - make ARCH=arm CROSS_COMPILE=arm-linux- saltedfishpi_defconfig
 - make ARCH=arm CROSS_COMPILE=arm-linux- -j4
 - popd
