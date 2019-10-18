@@ -50,9 +50,9 @@ $ sudo apt-get install gcc-arm-linux-gnueabihf
 $ sudo dnf install arm-none-eabi-gcc-cs
 ```
 
-对于未列出的 Linux 发型版，您可以搜索一下它的源有没有交叉编译工具链，如果没有，也可以使用 [Linaro GCC](https://releases.linaro.org/components/toolchain/binaries/latest-7/arm-eabi/)。
+对于未列出的 Linux 发行版，您可以搜索一下它的源有没有交叉编译工具链，如果没有，也可以使用 [Linaro GCC](https://releases.linaro.org/components/toolchain/binaries/latest-7/arm-eabi/)。
 
-由于各发型版安装的交叉编译器前缀不同，如果安装的编译器是 arm-none-eabi-gcc ，那么我们之后用到的 CROSS_COMPILE 就是 arm-none-eabi- ，即去掉最后的 gcc 部分。其它常见的还有 arm-linux-gnueabihf- 和 arm-linux-gnueabi ，都可以。
+由于各发行版安装的交叉编译器前缀不同，如果安装的编译器是 arm-none-eabi-gcc ，那么我们之后用到的 CROSS_COMPILE 就是 arm-none-eabi- ，即去掉最后的 gcc 部分。其它常见的还有 arm-linux-gnueabihf- 和 arm-linux-gnueabi ，都可以。
 
 ## 生成并更改 Linux .config
 
@@ -88,7 +88,7 @@ $ make ARCH=arm CROSS_COMPILE=arm-none-eabi- -j4
 
 ## 准备 rootfs
 
-仅有内核并不够，我们还需要一个 rootfs 。常见的办法有 buildroot 和直接采用已有的发型版的镜像，这里以 ArchLinuxARM 为例，假设我们预期的 rootfs 分区已经挂载到了 `mnt` 处：
+仅有内核并不够，我们还需要一个 rootfs 。常见的办法有 buildroot 和直接采用已有的发行版的镜像，这里以 ArchLinuxARM 为例，假设我们预期的 rootfs 分区已经挂载到了 `mnt` 处：
 
 ```shell
 $ wget http://os.archlinuxarm.org/os/ArchLinuxARM-armv7-latest.tar.gz
